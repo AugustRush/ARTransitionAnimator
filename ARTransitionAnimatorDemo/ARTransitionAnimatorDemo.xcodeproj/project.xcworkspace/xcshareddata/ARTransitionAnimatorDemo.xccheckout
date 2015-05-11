@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C0303905-E88B-4B39-88D7-9B6EA48A494B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2E303D43FB5CECC5FB32C664EB456262509E2BCB</key>
+		<string>https://github.com/AugustRush/ARTransitionAnimator.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ARTransitionAnimatorDemo/ARTransitionAnimatorDemo.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2E303D43FB5CECC5FB32C664EB456262509E2BCB</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/AugustRush/ARTransitionAnimator.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2E303D43FB5CECC5FB32C664EB456262509E2BCB</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2E303D43FB5CECC5FB32C664EB456262509E2BCB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ARTransitionAnimator</string>
+		</dict>
+	</array>
+</dict>
+</plist>
