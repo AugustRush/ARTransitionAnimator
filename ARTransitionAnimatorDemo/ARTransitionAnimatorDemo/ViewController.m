@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "ARTransitionAnimator.h"
+#import "FirstViewController.h"
 
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -24,8 +25,6 @@
     [super viewDidLoad];
 
     self.animations = @[@"push",@"present"];
-    
-    self.transitionAnimator = [[ARTransitionAnimator alloc] init];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 }
@@ -48,24 +47,27 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.row) {
         case 0:
         {
+            self.transitionAnimator = [[ARTransitionAnimator alloc] init];
             self.transitionAnimator.behindViewScale = 0.8;
-            self.navigationController.transitioningDelegate = self.transitionAnimator;
+            self.navigationController.delegate = self.transitionAnimator;
             
             UIViewController *viewController = [[UIViewController alloc] init];
             viewController.view.backgroundColor = [UIColor redColor];
-            viewController.transitioningDelegate = self.transitionAnimator;
             [self.navigationController pushViewController:viewController animated:YES];
         }
             break;
         case 1:
         {
+            self.transitionAnimator = [[ARTransitionAnimator alloc] init];
+            self.transitionAnimator.behindViewScale = 0.8;
             self.transitionAnimator.modalInsets = UIEdgeInsetsMake(20, 20, 20, 20);
             self.transitionAnimator.touchBackgroudDismissEnabled = YES;
             
-            UIViewController *viewController = [[UIViewController alloc] init];
+            FirstViewController *viewController = [[FirstViewController alloc] init];
             viewController.view.backgroundColor = [UIColor redColor];
             viewController.modalPresentationStyle = UIModalPresentationCustom;
             viewController.transitioningDelegate = self.transitionAnimator;

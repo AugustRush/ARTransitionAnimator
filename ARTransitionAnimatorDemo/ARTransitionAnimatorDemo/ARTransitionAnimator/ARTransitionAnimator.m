@@ -11,6 +11,7 @@
 @interface ARTransitionAnimator ()
 
 @property (nonatomic, assign) BOOL isDismiss;
+@property (nonatomic, assign) BOOL isNavigationTransition;
 @property (nonatomic, weak) UIViewController *toViewController;
 
 @end
@@ -94,21 +95,27 @@
                      } completion:^(BOOL finished) {
                          self.toViewController = toViewController;
                          [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-                         
                      }];
     
 }
 
 -(void)dismissWithAnimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    UIView *fromView = fromVC.view;
-    UIView *toView = toVC.view;
+    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIView *fromView = fromViewController.view;
+    UIView *toView = toViewController.view;
+    
     UIView *containerView = [transitionContext containerView];
+
+    if (self.isNavigationTransition) {
+        [containerView addSubview:toView];
+        [containerView addSubview:fromView];
+    }
+    
     NSTimeInterval duration = [self transitionDuration:transitionContext];
     
-    CGRect fromViewFinalFrame  = [transitionContext finalFrameForViewController:toVC];
+    CGRect fromViewFinalFrame  = [transitionContext initialFrameForViewController:fromViewController];
     fromViewFinalFrame.origin.y = CGRectGetHeight(containerView.bounds);
     
     [UIView animateWithDuration:duration
@@ -119,32 +126,38 @@
                      animations:^{
                          containerView.backgroundColor = [UIColor clearColor];
                          toView.transform = CGAffineTransformMakeScale(1, 1);
+                         toView.frame = [transitionContext finalFrameForViewController:toViewController];
                          fromView.frame = fromViewFinalFrame;
                      } completion:^(BOOL finished) {
+                         self.toViewController = nil;
                          [fromView removeFromSuperview];
-                         toView.userInteractionEnabled = YES;
                          [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
                      }];
+    
 }
 
 #pragma amrk - custom event methods
 
 -(void)handleTapGesture:(UITapGestureRecognizer *)tapGesture
 {
-    [self.toViewController.view endEditing:YES];
-    [self.toViewController dismissViewControllerAnimated:YES completion:nil];
+    if (!self.isNavigationTransition) {
+        [self.toViewController.view endEditing:YES];
+        [self.toViewController dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate methods
 
 -(id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
+    self.isNavigationTransition = NO;
     self.isDismiss = NO;
     return self;
 }
 
 -(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
 {
+    self.isNavigationTransition = NO;
     self.isDismiss = YES;
     return self;
 }
@@ -164,6 +177,7 @@
     }else{
         self.isDismiss = NO;
     }
+    self.isNavigationTransition = YES;
     return self;
 }
 

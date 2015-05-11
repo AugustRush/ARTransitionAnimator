@@ -15,6 +15,8 @@
 		975EC5D81B007759007DBB50 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 975EC5D61B007759007DBB50 /* LaunchScreen.xib */; };
 		975EC5E41B007759007DBB50 /* ARTransitionAnimatorDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5E31B007759007DBB50 /* ARTransitionAnimatorDemoTests.m */; };
 		975EC5F01B007997007DBB50 /* ARTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5EF1B007997007DBB50 /* ARTransitionAnimator.m */; };
+		975EC5F41B00A8F1007DBB50 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5F21B00A8F1007DBB50 /* FirstViewController.m */; };
+		975EC5F51B00A8F1007DBB50 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 975EC5F31B00A8F1007DBB50 /* FirstViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,9 @@
 		975EC5E31B007759007DBB50 /* ARTransitionAnimatorDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTransitionAnimatorDemoTests.m; sourceTree = "<group>"; };
 		975EC5EE1B007997007DBB50 /* ARTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARTransitionAnimator.h; sourceTree = "<group>"; };
 		975EC5EF1B007997007DBB50 /* ARTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTransitionAnimator.m; sourceTree = "<group>"; };
+		975EC5F11B00A8F1007DBB50 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		975EC5F21B00A8F1007DBB50 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		975EC5F31B00A8F1007DBB50 /* FirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +94,9 @@
 				975EC5CC1B007759007DBB50 /* AppDelegate.m */,
 				975EC5CE1B007759007DBB50 /* ViewController.h */,
 				975EC5CF1B007759007DBB50 /* ViewController.m */,
+				975EC5F11B00A8F1007DBB50 /* FirstViewController.h */,
+				975EC5F21B00A8F1007DBB50 /* FirstViewController.m */,
+				975EC5F31B00A8F1007DBB50 /* FirstViewController.xib */,
 				975EC5D11B007759007DBB50 /* Main.storyboard */,
 				975EC5D41B007759007DBB50 /* Images.xcassets */,
 				975EC5D61B007759007DBB50 /* LaunchScreen.xib */,
@@ -215,6 +223,7 @@
 				975EC5D31B007759007DBB50 /* Main.storyboard in Resources */,
 				975EC5D81B007759007DBB50 /* LaunchScreen.xib in Resources */,
 				975EC5D51B007759007DBB50 /* Images.xcassets in Resources */,
+				975EC5F51B00A8F1007DBB50 /* FirstViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +243,7 @@
 			files = (
 				975EC5D01B007759007DBB50 /* ViewController.m in Sources */,
 				975EC5CD1B007759007DBB50 /* AppDelegate.m in Sources */,
+				975EC5F41B00A8F1007DBB50 /* FirstViewController.m in Sources */,
 				975EC5F01B007997007DBB50 /* ARTransitionAnimator.m in Sources */,
 				975EC5CA1B007759007DBB50 /* main.m in Sources */,
 			);
