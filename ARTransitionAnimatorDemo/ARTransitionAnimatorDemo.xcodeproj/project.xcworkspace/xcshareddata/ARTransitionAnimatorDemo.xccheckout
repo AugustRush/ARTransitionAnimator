@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>C0303905-E88B-4B39-88D7-9B6EA48A494B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>ARTransitionAnimatorDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>2E303D43FB5CECC5FB32C664EB456262509E2BCB</key>
 		<string>https://github.com/AugustRush/ARTransitionAnimator.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ARTransitionAnimatorDemo/ARTransitionAnimatorDemo.xcodeproj/project.xcworkspace</string>
+	<string>ARTransitionAnimatorDemo/ARTransitionAnimatorDemo.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2E303D43FB5CECC5FB32C664EB456262509E2BCB</key>

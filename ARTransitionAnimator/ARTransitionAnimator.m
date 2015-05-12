@@ -86,7 +86,7 @@
                           delay:0
          usingSpringWithDamping:0.8
           initialSpringVelocity:0.2
-                        options:UIViewAnimationOptionCurveLinear|UIViewAnimationOptionAllowUserInteraction
+                        options:UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionAllowUserInteraction
                      animations:^{
                          containerView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
                          fromViewController.view.transform = CGAffineTransformScale(fromViewController.view.transform, self.behindViewScale, self.behindViewScale);
@@ -122,7 +122,7 @@
                           delay:0
          usingSpringWithDamping:0.8
           initialSpringVelocity:0.2
-                        options:UIViewAnimationOptionCurveLinear|UIViewAnimationOptionAllowUserInteraction
+                        options:UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionAllowUserInteraction
                      animations:^{
                          containerView.backgroundColor = [UIColor clearColor];
                          toView.transform = CGAffineTransformMakeScale(1, 1);

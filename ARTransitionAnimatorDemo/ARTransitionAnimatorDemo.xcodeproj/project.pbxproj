@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		972C5DED1B01B20500E6A486 /* ARTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 972C5DEC1B01B20500E6A486 /* ARTransitionAnimator.m */; };
 		975EC5CA1B007759007DBB50 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5C91B007759007DBB50 /* main.m */; };
 		975EC5CD1B007759007DBB50 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5CC1B007759007DBB50 /* AppDelegate.m */; };
 		975EC5D01B007759007DBB50 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5CF1B007759007DBB50 /* ViewController.m */; };
@@ -14,7 +15,6 @@
 		975EC5D51B007759007DBB50 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 975EC5D41B007759007DBB50 /* Images.xcassets */; };
 		975EC5D81B007759007DBB50 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 975EC5D61B007759007DBB50 /* LaunchScreen.xib */; };
 		975EC5E41B007759007DBB50 /* ARTransitionAnimatorDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5E31B007759007DBB50 /* ARTransitionAnimatorDemoTests.m */; };
-		975EC5F01B007997007DBB50 /* ARTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5EF1B007997007DBB50 /* ARTransitionAnimator.m */; };
 		975EC5F41B00A8F1007DBB50 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5F21B00A8F1007DBB50 /* FirstViewController.m */; };
 		975EC5F51B00A8F1007DBB50 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 975EC5F31B00A8F1007DBB50 /* FirstViewController.xib */; };
 /* End PBXBuildFile section */
@@ -30,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		972C5DEB1B01B20500E6A486 /* ARTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARTransitionAnimator.h; sourceTree = "<group>"; };
+		972C5DEC1B01B20500E6A486 /* ARTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTransitionAnimator.m; sourceTree = "<group>"; };
 		975EC5C41B007759007DBB50 /* ARTransitionAnimatorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARTransitionAnimatorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		975EC5C81B007759007DBB50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		975EC5C91B007759007DBB50 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -43,8 +45,6 @@
 		975EC5DD1B007759007DBB50 /* ARTransitionAnimatorDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARTransitionAnimatorDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		975EC5E21B007759007DBB50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		975EC5E31B007759007DBB50 /* ARTransitionAnimatorDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTransitionAnimatorDemoTests.m; sourceTree = "<group>"; };
-		975EC5EE1B007997007DBB50 /* ARTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARTransitionAnimator.h; sourceTree = "<group>"; };
-		975EC5EF1B007997007DBB50 /* ARTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTransitionAnimator.m; sourceTree = "<group>"; };
 		975EC5F11B00A8F1007DBB50 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		975EC5F21B00A8F1007DBB50 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		975EC5F31B00A8F1007DBB50 /* FirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstViewController.xib; sourceTree = "<group>"; };
@@ -68,6 +68,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		972C5DEA1B01B20500E6A486 /* ARTransitionAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				972C5DEB1B01B20500E6A486 /* ARTransitionAnimator.h */,
+				972C5DEC1B01B20500E6A486 /* ARTransitionAnimator.m */,
+			);
+			path = ARTransitionAnimator;
+			sourceTree = "<group>";
+		};
 		975EC5BB1B007759007DBB50 = {
 			isa = PBXGroup;
 			children = (
@@ -89,7 +98,7 @@
 		975EC5C61B007759007DBB50 /* ARTransitionAnimatorDemo */ = {
 			isa = PBXGroup;
 			children = (
-				975EC5ED1B007983007DBB50 /* ARTransitionAnimator */,
+				972C5DEA1B01B20500E6A486 /* ARTransitionAnimator */,
 				975EC5CB1B007759007DBB50 /* AppDelegate.h */,
 				975EC5CC1B007759007DBB50 /* AppDelegate.m */,
 				975EC5CE1B007759007DBB50 /* ViewController.h */,
@@ -129,15 +138,6 @@
 				975EC5E21B007759007DBB50 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		975EC5ED1B007983007DBB50 /* ARTransitionAnimator */ = {
-			isa = PBXGroup;
-			children = (
-				975EC5EE1B007997007DBB50 /* ARTransitionAnimator.h */,
-				975EC5EF1B007997007DBB50 /* ARTransitionAnimator.m */,
-			);
-			path = ARTransitionAnimator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,8 +244,8 @@
 				975EC5D01B007759007DBB50 /* ViewController.m in Sources */,
 				975EC5CD1B007759007DBB50 /* AppDelegate.m in Sources */,
 				975EC5F41B00A8F1007DBB50 /* FirstViewController.m in Sources */,
-				975EC5F01B007997007DBB50 /* ARTransitionAnimator.m in Sources */,
 				975EC5CA1B007759007DBB50 /* main.m in Sources */,
+				972C5DED1B01B20500E6A486 /* ARTransitionAnimator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +440,7 @@
 				975EC5E91B007759007DBB50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		975EC5EA1B007759007DBB50 /* Build configuration list for PBXNativeTarget "ARTransitionAnimatorDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -448,6 +449,7 @@
 				975EC5EC1B007759007DBB50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

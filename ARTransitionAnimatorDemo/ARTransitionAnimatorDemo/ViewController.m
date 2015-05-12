@@ -52,23 +52,20 @@
         case 0:
         {
             self.transitionAnimator = [[ARTransitionAnimator alloc] init];
-            self.transitionAnimator.behindViewScale = 0.8;
             self.navigationController.delegate = self.transitionAnimator;
             
-            UIViewController *viewController = [[UIViewController alloc] init];
-            viewController.view.backgroundColor = [UIColor redColor];
+            FirstViewController *viewController = [[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil];
             [self.navigationController pushViewController:viewController animated:YES];
         }
             break;
         case 1:
         {
             self.transitionAnimator = [[ARTransitionAnimator alloc] init];
-            self.transitionAnimator.behindViewScale = 0.8;
-            self.transitionAnimator.modalInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+            self.transitionAnimator.behindViewScale = 0.95;
+            self.transitionAnimator.modalInsets = UIEdgeInsetsMake(250, 0, 0, 0);
             self.transitionAnimator.touchBackgroudDismissEnabled = YES;
             
-            FirstViewController *viewController = [[FirstViewController alloc] init];
-            viewController.view.backgroundColor = [UIColor redColor];
+            FirstViewController *viewController = [[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil];
             viewController.modalPresentationStyle = UIModalPresentationCustom;
             viewController.transitioningDelegate = self.transitionAnimator;
             [self presentViewController:viewController animated:YES completion:nil];
