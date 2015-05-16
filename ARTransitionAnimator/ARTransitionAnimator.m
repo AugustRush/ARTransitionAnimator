@@ -77,11 +77,13 @@
         toView.frame = ToViewFinalRect;
     
         CAShapeLayer *maskLayer = [CAShapeLayer layer];
-        maskLayer.fillColor = [UIColor whiteColor].CGColor;
+        maskLayer.frame = toView.bounds;
+        maskLayer.fillColor = [UIColor blackColor].CGColor;
         [toView.layer setMask:maskLayer];
         
         
         ARBasicAnimation *animation = [ARBasicAnimation animationWithKeyPath:@"path"];
+        animation.additive = YES;
         animation.removedOnCompletion = YES;
         animation.duration = self.transitionDuration;
         
@@ -123,6 +125,7 @@
                 break;
         }
         
+        [maskLayer setValue:animation.toValue forKey:animation.keyPath];
         [maskLayer addAnimation:animation forKey:@"path"];
 
         [animation setCompletion:^(BOOL finished) {

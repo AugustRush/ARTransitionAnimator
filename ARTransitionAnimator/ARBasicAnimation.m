@@ -8,11 +8,16 @@
 
 #import "ARBasicAnimation.h"
 
+@interface ARBasicAnimation ()
+
+@end
+
 @implementation ARBasicAnimation
 
 +(instancetype)animationWithKeyPath:(NSString *)path
 {
     ARBasicAnimation *animation = [super animationWithKeyPath:path];
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     animation.delegate = animation;
     return animation;
 }
