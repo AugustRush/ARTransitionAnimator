@@ -134,8 +134,10 @@
         }];
     }
     
-    if (style == 2||
-        style == 4) {
+    if (style == 2 ||
+        style == 4 ||
+        style == 8 ||
+        style == 16) {
         CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
         CGRect startRect = ToViewFinalRect;
         switch (style) {
@@ -143,8 +145,16 @@
                 startRect.origin.x = -CGRectGetWidth(startRect);
                 break;
             case 4:
+                startRect.origin.y = CGRectGetHeight(startRect);
+                break;
+            case 8:
                 startRect.origin.x = CGRectGetWidth(startRect);
                 break;
+            case 16:
+                startRect.origin.x = CGRectGetWidth(startRect);
+                break;
+
+
     
             default:
                 break;
@@ -231,30 +241,39 @@
         [maskLayer addAnimation:animation forKey:@"path"];
         
         [animation setCompletion:^(BOOL finished) {
-            toView.layer.mask = nil;
+            fromView.layer.mask = nil;
             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
         }];
     }
     
-    if (style == 2||
-        style == 4) {
-        CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
-        CGRect startRect = ToViewFinalRect;
+    if (style == 2 ||
+        style == 4 ||
+        style == 8 ||
+        style == 16) {
+        CGRect fromRect = [transitionContext finalFrameForViewController:toViewController];
+        CGRect startRect = fromRect;
         switch (style) {
             case 2:
                 startRect.origin.x = -CGRectGetWidth(startRect);
                 break;
             case 4:
+                startRect.origin.y = CGRectGetHeight(startRect);
+                break;
+            case 8:
                 startRect.origin.x = CGRectGetWidth(startRect);
                 break;
+            case 16:
+                startRect.origin.x = CGRectGetWidth(startRect);
+                break;
+
                 
             default:
                 break;
         }
-        toView.frame = startRect;
+
         [UIView animateWithDuration:self.transitionDuration
                          animations:^{
-                             toView.frame = ToViewFinalRect;
+                             fromView.frame = startRect;
                          } completion:^(BOOL finished) {
                              [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
                          }];

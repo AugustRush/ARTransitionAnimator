@@ -28,12 +28,20 @@
                           @"push let to right: Material style",
                           @"push right to left: Material style",
                           @"push bottom to top: Material style",
-                          @"push top to bottom: Material style"],
+                          @"push top to bottom: Material style",
+                          @"push let to right",
+                          @"push right to left",
+                          @"push bottom to top",
+                          @"push top to bottom"],
                         @[@"present : Material style",
                           @"present let to right: Material style",
                           @"present right to left: Material style",
                           @"present bottom to top: Material style",
-                          @"present top to bottom: Material style"]];
+                          @"present top to bottom: Material style",
+                          @"present let to right",
+                          @"present right to left",
+                          @"present bottom to top",
+                          @"present top to bottom"]];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 }
@@ -89,6 +97,27 @@
         case 4:
         {
             self.transitionAnimator.transitionStyle = ARTransitionStyleMaterial|ARTransitionStyleTopToBottom;
+        }
+            break;
+        case 5:
+        {
+            self.transitionAnimator.transitionStyle = ARTransitionStyleLeftToRight;
+        }
+            break;
+        case 6:
+        {
+            self.transitionAnimator.transitionStyle = ARTransitionStyleRightToLeft;
+        }
+            break;
+            
+        case 7:
+        {
+            self.transitionAnimator.transitionStyle = ARTransitionStyleBottomToTop;
+        }
+            break;
+        case 8:
+        {
+            self.transitionAnimator.transitionStyle = ARTransitionStyleTopToBottom;
         }
             break;
 
