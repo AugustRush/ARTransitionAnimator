@@ -9,11 +9,21 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+typedef NS_OPTIONS(NSUInteger, ARTransitionStyle) {
+    ARTransitionStyleMaterial = 1 << 0,
+    ARTransitionStyleLeftToRight = 1 << 1,
+    ARTransitionStyleBottomToTop = 1 << 2,
+    ARTransitionStyleRightToLeft = 1 << 3,
+    ARTransitionStyleTopToBottom = 1 << 4,
+};
+
 @interface ARTransitionAnimator : NSObject<UIViewControllerAnimatedTransitioning,UIViewControllerTransitioningDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic, assign) CGFloat behindViewScale;
 @property (nonatomic, assign) NSTimeInterval transitionDuration;
 @property (nonatomic, assign) UIEdgeInsets modalInsets;
 @property (nonatomic, assign) BOOL touchBackgroudDismissEnabled;
+
+@property (nonatomic, assign) ARTransitionStyle transitionStyle;
 
 @end
