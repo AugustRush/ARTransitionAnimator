@@ -7,6 +7,7 @@
 //
 
 #import "ARTransitionAnimator.h"
+#import "ARBasicAnimation.h"
 
 @interface ARTransitionAnimator ()
 
@@ -28,6 +29,7 @@
         self.transitionDuration = 0.65;
         self.behindViewScale = 1;
         self.touchBackgroudDismissEnabled = NO;
+        self.transitionStyle = ARTransitionStyleLeftToRight;
     }
     return self;
 }
@@ -52,8 +54,9 @@
 
 -(void)presentingWithAnimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    
+    UIView *toView = toViewController.view;
     
     UIView *containerView = [transitionContext containerView];
     
@@ -64,39 +67,93 @@
     
     [containerView addSubview:toViewController.view];
     
-    toViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    NSUInteger style = self.transitionStyle;
+    if (style == 1 ||
+        style == 3 ||
+        style == 5 ||
+        style == 17 ||
+        style == 9) {
+        CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
+        toView.frame = ToViewFinalRect;
     
-    CGRect startRect = CGRectMake(0,
-                                  CGRectGetHeight(containerView.frame),
-                                  CGRectGetWidth(containerView.bounds),
-                                  CGRectGetHeight(containerView.bounds));
+        CAShapeLayer *maskLayer = [CAShapeLayer layer];
+        maskLayer.fillColor = [UIColor whiteColor].CGColor;
+        [toView.layer setMask:maskLayer];
+        
+        
+        ARBasicAnimation *animation = [ARBasicAnimation animationWithKeyPath:@"path"];
+        animation.removedOnCompletion = YES;
+        animation.duration = self.transitionDuration;
+        
+        switch (style) {
+            case 1:{
+                CGPoint center = CGPointMake(CGRectGetMidX(ToViewFinalRect), CGRectGetMidY(ToViewFinalRect));
+                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithArcCenter:center radius:1 startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath);
+                CGFloat radius = MAX(CGRectGetWidth(ToViewFinalRect), CGRectGetHeight(ToViewFinalRect));
+                animation.toValue = (__bridge id)[UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath;
+                break;
+            }
+            case 3:{
+                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 1, CGRectGetHeight(ToViewFinalRect))].CGPath);
+                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:ToViewFinalRect].CGPath);
+                
+                break;
+            }
+            case 5:{
+                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, CGRectGetHeight(ToViewFinalRect), CGRectGetWidth(ToViewFinalRect), 1)].CGPath);
+                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:ToViewFinalRect].CGPath);
+                
+                break;
+            }
+            case 17:{
+                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, 0, CGRectGetWidth(ToViewFinalRect), 1)].CGPath);
+                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:ToViewFinalRect].CGPath);
+                
+                break;
+            }
 
-    startRect.size.height -= (self.modalInsets.top + self.modalInsets.bottom);
-    startRect.size.width -= (self.modalInsets.left + self.modalInsets.right);
-    startRect.origin.x = self.modalInsets.left;
+            case 9:{
+                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(CGRectGetMaxX(ToViewFinalRect), 0, 1, CGRectGetHeight(ToViewFinalRect))].CGPath);
+                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:ToViewFinalRect].CGPath);
+                
+                break;
+            }
     
-    toViewController.view.frame = startRect;
+            default:
+                break;
+        }
+        
+        [maskLayer addAnimation:animation forKey:@"path"];
+
+        [animation setCompletion:^(BOOL finished) {
+            toView.layer.mask = nil;
+            [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+        }];
+    }
     
-    CGRect finalRect = startRect;
-    finalRect.origin.y = self.modalInsets.top;
-    finalRect.origin.x = self.modalInsets.left;
+    if (style == 2||
+        style == 4) {
+        CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
+        CGRect startRect = ToViewFinalRect;
+        switch (style) {
+            case 2:
+                startRect.origin.x = -CGRectGetWidth(startRect);
+                break;
+            case 4:
+                startRect.origin.x = CGRectGetWidth(startRect);
+                break;
     
-    containerView.backgroundColor = [UIColor clearColor];
-    [UIView animateWithDuration:[self transitionDuration:transitionContext]
-                          delay:0
-         usingSpringWithDamping:0.8
-          initialSpringVelocity:0.2
-                        options:UIViewAnimationOptionCurveLinear|UIViewAnimationOptionAllowUserInteraction
-                     animations:^{
-                         containerView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-                         fromViewController.view.transform = CGAffineTransformScale(fromViewController.view.transform, self.behindViewScale, self.behindViewScale);
-                         toViewController.view.frame = finalRect;
-                         
-                     } completion:^(BOOL finished) {
-                         self.toViewController = toViewController;
-                         [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-                     }];
-    
+            default:
+                break;
+        }
+        toView.frame = startRect;
+        [UIView animateWithDuration:self.transitionDuration
+                         animations:^{
+                             toView.frame = ToViewFinalRect;
+                         } completion:^(BOOL finished) {
+                             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+                         }];
+    }
 }
 
 -(void)dismissWithAnimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
@@ -113,30 +170,101 @@
         [containerView addSubview:fromView];
     }
     
-    NSTimeInterval duration = [self transitionDuration:transitionContext];
+    NSUInteger style = self.transitionStyle;
+    if (style == 1 ||
+        style == 3 ||
+        style == 5 ||
+        style == 17 ||
+        style == 9) {
+        CGRect fromFinalRect = fromView.bounds;
+        
+        CAShapeLayer *maskLayer = [CAShapeLayer layer];
+        maskLayer.fillColor = [UIColor whiteColor].CGColor;
+        [fromView.layer setMask:maskLayer];
+        
+        
+        ARBasicAnimation *animation = [ARBasicAnimation animationWithKeyPath:@"path"];
+        animation.removedOnCompletion = YES;
+        animation.duration = self.transitionDuration;
+        
+        switch (style) {
+            case 1:{
+                CGPoint center = CGPointMake(CGRectGetMidX(fromFinalRect), CGRectGetMidY(fromFinalRect));
+                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithArcCenter:center radius:1 startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath);
+                CGFloat radius = MAX(CGRectGetWidth(fromFinalRect), CGRectGetHeight(fromFinalRect));
+                animation.fromValue = (__bridge id)[UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath;
+                break;
+            }
+            case 3:{
+                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 1, CGRectGetHeight(fromFinalRect))].CGPath);
+                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:fromFinalRect].CGPath);
+                
+                break;
+            }
+            case 5:{
+                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, CGRectGetHeight(fromFinalRect), CGRectGetWidth(fromFinalRect), 1)].CGPath);
+                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:fromFinalRect].CGPath);
+                
+                break;
+            }
+            case 17:{
+                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, 0, CGRectGetWidth(fromFinalRect), 1)].CGPath);
+                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:fromFinalRect].CGPath);
+                
+                break;
+            }
+                
+            case 9:{
+                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(CGRectGetMaxX(fromFinalRect), 0, 1, CGRectGetHeight(fromFinalRect))].CGPath);
+                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:fromFinalRect].CGPath);
+                
+                break;
+            }
+                
+            default:
+                break;
+        }
+        
+        [maskLayer addAnimation:animation forKey:@"path"];
+        
+        [animation setCompletion:^(BOOL finished) {
+            toView.layer.mask = nil;
+            [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+        }];
+    }
     
-    CGRect fromViewFinalFrame  = [transitionContext initialFrameForViewController:fromViewController];
-    fromViewFinalFrame.origin.y = CGRectGetHeight(containerView.bounds);
-    
-    [UIView animateWithDuration:duration
-                          delay:0
-         usingSpringWithDamping:0.8
-          initialSpringVelocity:0.2
-                        options:UIViewAnimationOptionCurveLinear|UIViewAnimationOptionAllowUserInteraction
-                     animations:^{
-                         containerView.backgroundColor = [UIColor clearColor];
-                         toView.transform = CGAffineTransformMakeScale(1, 1);
-                         toView.frame = [transitionContext finalFrameForViewController:toViewController];
-                         fromView.frame = fromViewFinalFrame;
-                     } completion:^(BOOL finished) {
-                         self.toViewController = nil;
-                         [fromView removeFromSuperview];
-                         [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-                     }];
+    if (style == 2||
+        style == 4) {
+        CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
+        CGRect startRect = ToViewFinalRect;
+        switch (style) {
+            case 2:
+                startRect.origin.x = -CGRectGetWidth(startRect);
+                break;
+            case 4:
+                startRect.origin.x = CGRectGetWidth(startRect);
+                break;
+                
+            default:
+                break;
+        }
+        toView.frame = startRect;
+        [UIView animateWithDuration:self.transitionDuration
+                         animations:^{
+                             toView.frame = ToViewFinalRect;
+                         } completion:^(BOOL finished) {
+                             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+                         }];
+    }
     
 }
 
-#pragma amrk - custom event methods
+#pragma mark - transition style methods
+
+
+
+
+#pragma mark - backgroud event methods
 
 -(void)handleTapGesture:(UITapGestureRecognizer *)tapGesture
 {

@@ -17,6 +17,7 @@
 		975EC5E41B007759007DBB50 /* ARTransitionAnimatorDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5E31B007759007DBB50 /* ARTransitionAnimatorDemoTests.m */; };
 		975EC5F41B00A8F1007DBB50 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC5F21B00A8F1007DBB50 /* FirstViewController.m */; };
 		975EC5F51B00A8F1007DBB50 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 975EC5F31B00A8F1007DBB50 /* FirstViewController.xib */; };
+		9763074A1B06A2E300E69D12 /* ARBasicAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 976307491B06A2E300E69D12 /* ARBasicAnimation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,8 @@
 		975EC5F11B00A8F1007DBB50 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		975EC5F21B00A8F1007DBB50 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		975EC5F31B00A8F1007DBB50 /* FirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstViewController.xib; sourceTree = "<group>"; };
+		976307481B06A2E300E69D12 /* ARBasicAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBasicAnimation.h; sourceTree = "<group>"; };
+		976307491B06A2E300E69D12 /* ARBasicAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBasicAnimation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +76,8 @@
 			children = (
 				972C5DEB1B01B20500E6A486 /* ARTransitionAnimator.h */,
 				972C5DEC1B01B20500E6A486 /* ARTransitionAnimator.m */,
+				976307481B06A2E300E69D12 /* ARBasicAnimation.h */,
+				976307491B06A2E300E69D12 /* ARBasicAnimation.m */,
 			);
 			path = ARTransitionAnimator;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				975EC5CD1B007759007DBB50 /* AppDelegate.m in Sources */,
 				975EC5F41B00A8F1007DBB50 /* FirstViewController.m in Sources */,
 				975EC5CA1B007759007DBB50 /* main.m in Sources */,
+				9763074A1B06A2E300E69D12 /* ARBasicAnimation.m in Sources */,
 				972C5DED1B01B20500E6A486 /* ARTransitionAnimator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -24,22 +24,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.animations = @[@"push",@"present"];
+    self.animations = @[@[@"push : Material style",
+                          @"push let to right: Material style",
+                          @"push right to left: Material style",
+                          @"push bottom to top: Material style",
+                          @"push top to bottom: Material style"],
+                        @[@"present : Material style",
+                          @"present let to right: Material style",
+                          @"present right to left: Material style",
+                          @"present bottom to top: Material style",
+                          @"present top to bottom: Material style"]];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 }
 
 #pragma mark - UITableViewDataSource methods
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return self.animations.count;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.animations[section] count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.textLabel.text = self.animations[indexPath.row];
+    cell.textLabel.text = self.animations[indexPath.section][indexPath.row];
     return cell;
 }
 
@@ -48,32 +62,50 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    self.transitionAnimator = [[ARTransitionAnimator alloc] init];
+    
     switch (indexPath.row) {
         case 0:
         {
-            self.transitionAnimator = [[ARTransitionAnimator alloc] init];
-            self.navigationController.delegate = self.transitionAnimator;
-            
-            FirstViewController *viewController = [[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil];
-            [self.navigationController pushViewController:viewController animated:YES];
+            self.transitionAnimator.transitionStyle = ARTransitionStyleMaterial;
         }
             break;
         case 1:
         {
-            self.transitionAnimator = [[ARTransitionAnimator alloc] init];
-            self.transitionAnimator.behindViewScale = 0.95;
-            self.transitionAnimator.modalInsets = UIEdgeInsetsMake(250, 0, 0, 0);
-            self.transitionAnimator.touchBackgroudDismissEnabled = YES;
-            
-            FirstViewController *viewController = [[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil];
-            viewController.modalPresentationStyle = UIModalPresentationCustom;
-            viewController.transitioningDelegate = self.transitionAnimator;
-            [self presentViewController:viewController animated:YES completion:nil];
+            self.transitionAnimator.transitionStyle = ARTransitionStyleMaterial|ARTransitionStyleLeftToRight;
         }
             break;
-    
+        case 2:
+        {
+            self.transitionAnimator.transitionStyle = ARTransitionStyleMaterial|ARTransitionStyleRightToLeft;
+        }
+            break;
+
+        case 3:
+        {
+            self.transitionAnimator.transitionStyle = ARTransitionStyleMaterial|ARTransitionStyleBottomToTop;
+        }
+            break;
+        case 4:
+        {
+            self.transitionAnimator.transitionStyle = ARTransitionStyleMaterial|ARTransitionStyleTopToBottom;
+        }
+            break;
+
         default:
             break;
+    }
+    
+    FirstViewController *viewController = [[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil];
+    if (indexPath.section == 0) {
+        self.navigationController.delegate = self.transitionAnimator;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }else{
+        UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:viewController];
+        navigation.modalPresentationStyle = UIModalPresentationCustom;
+        navigation.transitioningDelegate = self.transitionAnimator;
+        [self presentViewController:navigation animated:YES completion:nil];
+    
     }
 }
 

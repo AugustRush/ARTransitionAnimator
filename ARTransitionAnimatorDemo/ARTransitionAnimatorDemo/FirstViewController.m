@@ -25,6 +25,12 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)pushToSecond:(id)sender {
+    UIViewController *controller = [[UIViewController alloc] init];
+    controller.view.backgroundColor = [UIColor whiteColor];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
