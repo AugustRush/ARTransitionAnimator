@@ -25,10 +25,7 @@
 {
     self = [super init];
     if (self) {
-        self.modalInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-        self.transitionDuration = 0.65;
-        self.behindViewScale = 1;
-        self.touchBackgroudDismissEnabled = NO;
+        self.transitionDuration = 0.5;
         self.transitionStyle = ARTransitionStyleLeftToRight;
     }
     return self;
@@ -59,20 +56,15 @@
     UIView *toView = toViewController.view;
     
     UIView *containerView = [transitionContext containerView];
-    
-    if (self.touchBackgroudDismissEnabled) {
-        UITapGestureRecognizer *tapGesureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        [containerView addGestureRecognizer:tapGesureRecognizer];
-    }
-    
+        
     [containerView addSubview:toViewController.view];
     
     NSUInteger style = self.transitionStyle;
     if (style == 1 ||
         style == 3 ||
         style == 5 ||
-        style == 17 ||
-        style == 9) {
+        style == 9 ||
+        style == 17) {
         CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
         toView.frame = ToViewFinalRect;
     
@@ -154,8 +146,6 @@
                 startRect.origin.x = CGRectGetWidth(startRect);
                 break;
 
-
-    
             default:
                 break;
         }
@@ -187,8 +177,8 @@
     if (style == 1 ||
         style == 3 ||
         style == 5 ||
-        style == 17 ||
-        style == 9) {
+        style == 9 ||
+        style == 17) {
         CGRect fromFinalRect = fromView.bounds;
         
         CAShapeLayer *maskLayer = [CAShapeLayer layer];
@@ -266,7 +256,6 @@
                 startRect.origin.x = CGRectGetWidth(startRect);
                 break;
 
-                
             default:
                 break;
         }
@@ -280,11 +269,6 @@
     }
     
 }
-
-#pragma mark - transition style methods
-
-
-
 
 #pragma mark - backgroud event methods
 
