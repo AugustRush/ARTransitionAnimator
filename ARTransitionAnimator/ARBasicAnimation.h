@@ -8,6 +8,14 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+NS_INLINE CGFloat CGPointDistance(CGPoint fromPoint,CGPoint toPoint){
+    CGFloat distance;
+    CGFloat xDist = (toPoint.x - fromPoint.x);
+    CGFloat yDist = (toPoint.y - fromPoint.y);
+    distance = sqrt((xDist * xDist) + (yDist * yDist));
+    return distance;
+}
+
 @interface ARBasicAnimation : CABasicAnimation
 
 @property (nonatomic, copy) void(^completion)(BOOL finished);

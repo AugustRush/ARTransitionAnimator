@@ -19,11 +19,7 @@ typedef NS_OPTIONS(NSUInteger, ARTransitionStyle) {
 
 @interface ARTransitionAnimator : NSObject<UIViewControllerAnimatedTransitioning,UIViewControllerTransitioningDelegate,UINavigationControllerDelegate>
 
-@property (nonatomic, assign) CGFloat behindViewScale;
 @property (nonatomic, assign) NSTimeInterval transitionDuration;
-@property (nonatomic, assign) UIEdgeInsets modalInsets;
-@property (nonatomic, assign) BOOL touchBackgroudDismissEnabled;
-
 @property (nonatomic, assign) ARTransitionStyle transitionStyle;
 
 @end

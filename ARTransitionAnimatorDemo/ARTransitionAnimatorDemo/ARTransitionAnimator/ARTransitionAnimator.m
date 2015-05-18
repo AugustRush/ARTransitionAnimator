@@ -133,7 +133,7 @@
                 startRect.origin.x = CGRectGetWidth(startRect);
                 break;
             case 16:
-                startRect.origin.x = CGRectGetWidth(startRect);
+                startRect.origin.y = -CGRectGetHeight(startRect);
                 break;
 
             default:
@@ -238,7 +238,7 @@
                 startRect.origin.x = CGRectGetWidth(startRect);
                 break;
             case 16:
-                startRect.origin.x = CGRectGetWidth(startRect);
+                startRect.origin.y = -CGRectGetHeight(startRect);
                 break;
 
             default:

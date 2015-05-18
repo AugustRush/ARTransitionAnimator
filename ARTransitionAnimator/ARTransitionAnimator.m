@@ -13,7 +13,6 @@
 
 @property (nonatomic, assign) BOOL isDismiss;
 @property (nonatomic, assign) BOOL isNavigationTransition;
-@property (nonatomic, weak) UIViewController *toViewController;
 
 @end
 
@@ -25,10 +24,7 @@
 {
     self = [super init];
     if (self) {
-        self.modalInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-        self.transitionDuration = 0.65;
-        self.behindViewScale = 1;
-        self.touchBackgroudDismissEnabled = NO;
+        self.transitionDuration = 0.5;
         self.transitionStyle = ARTransitionStyleLeftToRight;
     }
     return self;
@@ -59,20 +55,15 @@
     UIView *toView = toViewController.view;
     
     UIView *containerView = [transitionContext containerView];
-    
-    if (self.touchBackgroudDismissEnabled) {
-        UITapGestureRecognizer *tapGesureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        [containerView addGestureRecognizer:tapGesureRecognizer];
-    }
-    
+        
     [containerView addSubview:toViewController.view];
     
     NSUInteger style = self.transitionStyle;
     if (style == 1 ||
         style == 3 ||
         style == 5 ||
-        style == 17 ||
-        style == 9) {
+        style == 9 ||
+        style == 17) {
         CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
         toView.frame = ToViewFinalRect;
     
@@ -83,41 +74,30 @@
         
         
         ARBasicAnimation *animation = [ARBasicAnimation animationWithKeyPath:@"path"];
-        animation.additive = YES;
         animation.removedOnCompletion = YES;
-        animation.duration = self.transitionDuration;
         
+        CGPoint center = CGPointZero;
+        CGFloat radius = sqrt((CGRectGetWidth(ToViewFinalRect) *CGRectGetWidth(ToViewFinalRect) + CGRectGetHeight(ToViewFinalRect)*CGRectGetHeight(ToViewFinalRect)));
         switch (style) {
             case 1:{
-                CGPoint center = CGPointMake(CGRectGetMidX(ToViewFinalRect), CGRectGetMidY(ToViewFinalRect));
-                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithArcCenter:center radius:1 startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath);
-                CGFloat radius = MAX(CGRectGetWidth(ToViewFinalRect), CGRectGetHeight(ToViewFinalRect));
-                animation.toValue = (__bridge id)[UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath;
+                center = CGPointMake(CGRectGetMidX(ToViewFinalRect), CGRectGetMidY(ToViewFinalRect));
                 break;
             }
             case 3:{
-                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 1, CGRectGetHeight(ToViewFinalRect))].CGPath);
-                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:ToViewFinalRect].CGPath);
-                
+                center = CGPointMake(0, CGRectGetMidY(ToViewFinalRect));
                 break;
             }
             case 5:{
-                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, CGRectGetHeight(ToViewFinalRect), CGRectGetWidth(ToViewFinalRect), 1)].CGPath);
-                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:ToViewFinalRect].CGPath);
-                
+                center = CGPointMake(CGRectGetMidX(ToViewFinalRect), CGRectGetHeight(ToViewFinalRect));
                 break;
             }
             case 17:{
-                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, 0, CGRectGetWidth(ToViewFinalRect), 1)].CGPath);
-                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:ToViewFinalRect].CGPath);
-                
+                center = CGPointMake(CGRectGetMidX(ToViewFinalRect), 0);
                 break;
             }
 
             case 9:{
-                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(CGRectGetMaxX(ToViewFinalRect), 0, 1, CGRectGetHeight(ToViewFinalRect))].CGPath);
-                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:ToViewFinalRect].CGPath);
-                
+                center = CGPointMake(CGRectGetMaxX(ToViewFinalRect), CGRectGetMidY(ToViewFinalRect));
                 break;
             }
     
@@ -125,6 +105,8 @@
                 break;
         }
         
+        animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithArcCenter:center radius:1 startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath);
+        animation.toValue = (__bridge id)[UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath;
         [maskLayer setValue:animation.toValue forKey:animation.keyPath];
         [maskLayer addAnimation:animation forKey:@"path"];
 
@@ -134,8 +116,10 @@
         }];
     }
     
-    if (style == 2||
-        style == 4) {
+    if (style == 2 ||
+        style == 4 ||
+        style == 8 ||
+        style == 16) {
         CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
         CGRect startRect = ToViewFinalRect;
         switch (style) {
@@ -143,9 +127,15 @@
                 startRect.origin.x = -CGRectGetWidth(startRect);
                 break;
             case 4:
+                startRect.origin.y = CGRectGetHeight(startRect);
+                break;
+            case 8:
                 startRect.origin.x = CGRectGetWidth(startRect);
                 break;
-    
+            case 16:
+                startRect.origin.y = -CGRectGetHeight(startRect);
+                break;
+
             default:
                 break;
         }
@@ -177,12 +167,13 @@
     if (style == 1 ||
         style == 3 ||
         style == 5 ||
-        style == 17 ||
-        style == 9) {
-        CGRect fromFinalRect = fromView.bounds;
+        style == 9 ||
+        style == 17) {
+        CGRect fromViewRect = [transitionContext initialFrameForViewController:fromViewController];
         
         CAShapeLayer *maskLayer = [CAShapeLayer layer];
-        maskLayer.fillColor = [UIColor whiteColor].CGColor;
+        maskLayer.frame = toView.bounds;
+        maskLayer.fillColor = [UIColor blackColor].CGColor;
         [fromView.layer setMask:maskLayer];
         
         
@@ -190,37 +181,28 @@
         animation.removedOnCompletion = YES;
         animation.duration = self.transitionDuration;
         
+        CGPoint center = CGPointZero;
+        CGFloat radius = sqrt((CGRectGetWidth(fromViewRect) *CGRectGetWidth(fromViewRect) + CGRectGetHeight(fromViewRect)*CGRectGetHeight(fromViewRect)));
         switch (style) {
             case 1:{
-                CGPoint center = CGPointMake(CGRectGetMidX(fromFinalRect), CGRectGetMidY(fromFinalRect));
-                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithArcCenter:center radius:1 startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath);
-                CGFloat radius = MAX(CGRectGetWidth(fromFinalRect), CGRectGetHeight(fromFinalRect));
-                animation.fromValue = (__bridge id)[UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath;
+                center = CGPointMake(CGRectGetMidX(fromViewRect), CGRectGetMidY(fromViewRect));
                 break;
             }
             case 3:{
-                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 1, CGRectGetHeight(fromFinalRect))].CGPath);
-                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:fromFinalRect].CGPath);
-                
+                center = CGPointMake(0, CGRectGetMidY(fromViewRect));
                 break;
             }
             case 5:{
-                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, CGRectGetHeight(fromFinalRect), CGRectGetWidth(fromFinalRect), 1)].CGPath);
-                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:fromFinalRect].CGPath);
-                
+                center = CGPointMake(CGRectGetMidX(fromViewRect), CGRectGetHeight(fromViewRect));
                 break;
             }
             case 17:{
-                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(0, 0, CGRectGetWidth(fromFinalRect), 1)].CGPath);
-                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:fromFinalRect].CGPath);
-                
+                center = CGPointMake(CGRectGetMidX(fromViewRect), 0);
                 break;
             }
                 
             case 9:{
-                animation.toValue = (__bridge id)([UIBezierPath bezierPathWithRect:CGRectMake(CGRectGetMaxX(fromFinalRect), 0, 1, CGRectGetHeight(fromFinalRect))].CGPath);
-                animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithRect:fromFinalRect].CGPath);
-                
+                center = CGPointMake(CGRectGetMaxX(fromViewRect), CGRectGetMidY(fromViewRect));
                 break;
             }
                 
@@ -228,33 +210,44 @@
                 break;
         }
         
+        animation.toValue = (__bridge id)([UIBezierPath bezierPathWithArcCenter:center radius:1 startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath);
+        animation.fromValue = (__bridge id)[UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath;
+        [maskLayer setValue:animation.toValue forKey:animation.keyPath];
         [maskLayer addAnimation:animation forKey:@"path"];
         
         [animation setCompletion:^(BOOL finished) {
-            toView.layer.mask = nil;
+            fromView.layer.mask = nil;
             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
         }];
     }
     
-    if (style == 2||
-        style == 4) {
-        CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
-        CGRect startRect = ToViewFinalRect;
+    if (style == 2 ||
+        style == 4 ||
+        style == 8 ||
+        style == 16) {
+        CGRect fromRect = [transitionContext finalFrameForViewController:toViewController];
+        CGRect startRect = fromRect;
         switch (style) {
             case 2:
                 startRect.origin.x = -CGRectGetWidth(startRect);
                 break;
             case 4:
+                startRect.origin.y = CGRectGetHeight(startRect);
+                break;
+            case 8:
                 startRect.origin.x = CGRectGetWidth(startRect);
                 break;
-                
+            case 16:
+                startRect.origin.y = -CGRectGetHeight(startRect);
+                break;
+
             default:
                 break;
         }
-        toView.frame = startRect;
+
         [UIView animateWithDuration:self.transitionDuration
                          animations:^{
-                             toView.frame = ToViewFinalRect;
+                             fromView.frame = startRect;
                          } completion:^(BOOL finished) {
                              [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
                          }];
@@ -262,20 +255,9 @@
     
 }
 
-#pragma mark - transition style methods
-
-
-
-
 #pragma mark - backgroud event methods
 
--(void)handleTapGesture:(UITapGestureRecognizer *)tapGesture
-{
-    if (!self.isNavigationTransition) {
-        [self.toViewController.view endEditing:YES];
-        [self.toViewController dismissViewControllerAnimated:YES completion:nil];
-    }
-}
+//remove methods. will impliment ASAP
 
 #pragma mark - UIViewControllerTransitioningDelegate methods
 
