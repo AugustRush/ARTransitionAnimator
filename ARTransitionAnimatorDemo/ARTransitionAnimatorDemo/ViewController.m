@@ -71,7 +71,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.transitionAnimator = [[ARTransitionAnimator alloc] init];
-    self.transitionAnimator.transitionDuration = 0.3;
+    self.transitionAnimator.transitionDuration = 0.6;
     
     switch (indexPath.row) {
         case 0:
