@@ -17,7 +17,7 @@
 +(instancetype)animationWithKeyPath:(NSString *)path
 {
     ARBasicAnimation *animation = [super animationWithKeyPath:path];
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     animation.delegate = animation;
     return animation;
 }
@@ -26,7 +26,9 @@
 
 -(void)animationDidStart:(CAAnimation *)anim
 {
-
+    if (self.start) {
+        self.start();
+    }
 }
 
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag

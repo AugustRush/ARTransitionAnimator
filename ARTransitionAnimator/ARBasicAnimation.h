@@ -19,5 +19,6 @@ NS_INLINE CGFloat CGPointDistance(CGPoint fromPoint,CGPoint toPoint){
 @interface ARBasicAnimation : CABasicAnimation
 
 @property (nonatomic, copy) void(^completion)(BOOL finished);
+@property (nonatomic, copy) void(^start)(void);
 
 @end
