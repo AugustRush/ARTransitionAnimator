@@ -23,6 +23,10 @@ ARTransitionAnimator is a simple class which custom UIViewController transition 
 
  ```
 
+ # Install
+
+ pod 'ARTransitionAnimator', :git => 'https://github.com/AugustRush/ARTransitionAnimator.git'
+
  # TO DO
 
  * add more animations
