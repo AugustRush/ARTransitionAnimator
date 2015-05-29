@@ -114,6 +114,7 @@
             toView.layer.mask = nil;
             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
         }];
+        
     }
     
     if (style == 2 ||
