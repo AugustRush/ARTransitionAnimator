@@ -65,6 +65,9 @@
         style == 9 ||
         style == 17) {
         CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
+        if (CGRectIsEmpty(ToViewFinalRect)) {
+            ToViewFinalRect = [[UIScreen mainScreen] bounds];
+        }
         toView.frame = ToViewFinalRect;
     
         CAShapeLayer *maskLayer = [CAShapeLayer layer];
@@ -122,6 +125,9 @@
         style == 8 ||
         style == 16) {
         CGRect ToViewFinalRect = [transitionContext finalFrameForViewController:toViewController];
+        if (CGRectIsEmpty(ToViewFinalRect)) {
+            ToViewFinalRect = [[UIScreen mainScreen] bounds];
+        }
         CGRect startRect = ToViewFinalRect;
         switch (style) {
             case 2:
