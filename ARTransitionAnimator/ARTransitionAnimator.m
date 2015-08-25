@@ -75,6 +75,7 @@
         
         ARBasicAnimation *animation = [ARBasicAnimation animationWithKeyPath:@"path"];
         animation.removedOnCompletion = YES;
+        animation.duration = self.transitionDuration;
         
         CGPoint center = CGPointZero;
         CGFloat radius = sqrt((CGRectGetWidth(ToViewFinalRect) *CGRectGetWidth(ToViewFinalRect) + CGRectGetHeight(ToViewFinalRect)*CGRectGetHeight(ToViewFinalRect)));
