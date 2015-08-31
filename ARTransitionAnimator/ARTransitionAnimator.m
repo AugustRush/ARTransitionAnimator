@@ -78,27 +78,32 @@
         animation.duration = self.transitionDuration;
         
         CGPoint center = CGPointZero;
-        CGFloat radius = sqrt((CGRectGetWidth(ToViewFinalRect) *CGRectGetWidth(ToViewFinalRect) + CGRectGetHeight(ToViewFinalRect)*CGRectGetHeight(ToViewFinalRect)));
+        CGFloat radius = 0;
         switch (style) {
             case 1:{
                 center = CGPointMake(CGRectGetMidX(ToViewFinalRect), CGRectGetMidY(ToViewFinalRect));
+                radius = sqrt((CGRectGetWidth(ToViewFinalRect) *CGRectGetWidth(ToViewFinalRect)/4 + CGRectGetHeight(ToViewFinalRect)*CGRectGetHeight(ToViewFinalRect))/4);
                 break;
             }
             case 3:{
                 center = CGPointMake(0, CGRectGetMidY(ToViewFinalRect));
+                radius = sqrt((CGRectGetWidth(ToViewFinalRect) *CGRectGetWidth(ToViewFinalRect) + CGRectGetHeight(ToViewFinalRect)*CGRectGetHeight(ToViewFinalRect))/4);
                 break;
             }
             case 5:{
                 center = CGPointMake(CGRectGetMidX(ToViewFinalRect), CGRectGetHeight(ToViewFinalRect));
+                radius = sqrt((CGRectGetWidth(ToViewFinalRect) *CGRectGetWidth(ToViewFinalRect)/4 + CGRectGetHeight(ToViewFinalRect)*CGRectGetHeight(ToViewFinalRect)));
                 break;
             }
             case 17:{
                 center = CGPointMake(CGRectGetMidX(ToViewFinalRect), 0);
+                radius = sqrt((CGRectGetWidth(ToViewFinalRect) *CGRectGetWidth(ToViewFinalRect)/4 + CGRectGetHeight(ToViewFinalRect)*CGRectGetHeight(ToViewFinalRect)));
                 break;
             }
 
             case 9:{
                 center = CGPointMake(CGRectGetMaxX(ToViewFinalRect), CGRectGetMidY(ToViewFinalRect));
+                radius = sqrt((CGRectGetWidth(ToViewFinalRect) *CGRectGetWidth(ToViewFinalRect) + CGRectGetHeight(ToViewFinalRect)*CGRectGetHeight(ToViewFinalRect))/4);
                 break;
             }
     
@@ -109,7 +114,7 @@
         animation.fromValue = (__bridge id)([UIBezierPath bezierPathWithArcCenter:center radius:1 startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath);
         animation.toValue = (__bridge id)[UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath;
         [maskLayer setValue:animation.toValue forKey:animation.keyPath];
-        [maskLayer addAnimation:animation forKey:@"path"];
+        [maskLayer addAnimation:animation forKey:nil];
 
         [animation setCompletion:^(BOOL finished) {
             toView.layer.mask = nil;
@@ -184,27 +189,32 @@
         animation.duration = self.transitionDuration;
         
         CGPoint center = CGPointZero;
-        CGFloat radius = sqrt((CGRectGetWidth(fromViewRect) *CGRectGetWidth(fromViewRect) + CGRectGetHeight(fromViewRect)*CGRectGetHeight(fromViewRect)));
+        CGFloat radius = 0;
         switch (style) {
             case 1:{
                 center = CGPointMake(CGRectGetMidX(fromViewRect), CGRectGetMidY(fromViewRect));
+                radius = sqrt((CGRectGetWidth(fromViewRect) *CGRectGetWidth(fromViewRect)/4 + CGRectGetHeight(fromViewRect)*CGRectGetHeight(fromViewRect))/4);
                 break;
             }
             case 3:{
                 center = CGPointMake(0, CGRectGetMidY(fromViewRect));
+                radius = sqrt((CGRectGetWidth(fromViewRect) *CGRectGetWidth(fromViewRect) + CGRectGetHeight(fromViewRect)*CGRectGetHeight(fromViewRect))/4);
                 break;
             }
             case 5:{
                 center = CGPointMake(CGRectGetMidX(fromViewRect), CGRectGetHeight(fromViewRect));
+                radius = sqrt((CGRectGetWidth(fromViewRect) *CGRectGetWidth(fromViewRect)/4 + CGRectGetHeight(fromViewRect)*CGRectGetHeight(fromViewRect)));
                 break;
             }
             case 17:{
                 center = CGPointMake(CGRectGetMidX(fromViewRect), 0);
+                radius = sqrt((CGRectGetWidth(fromViewRect) *CGRectGetWidth(fromViewRect)/4 + CGRectGetHeight(fromViewRect)*CGRectGetHeight(fromViewRect)));
                 break;
             }
                 
             case 9:{
                 center = CGPointMake(CGRectGetMaxX(fromViewRect), CGRectGetMidY(fromViewRect));
+                radius = sqrt((CGRectGetWidth(fromViewRect) *CGRectGetWidth(fromViewRect) + CGRectGetHeight(fromViewRect)*CGRectGetHeight(fromViewRect))/4);
                 break;
             }
                 
@@ -215,7 +225,7 @@
         animation.toValue = (__bridge id)([UIBezierPath bezierPathWithArcCenter:center radius:1 startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath);
         animation.fromValue = (__bridge id)[UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:2*M_PI clockwise:YES].CGPath;
         [maskLayer setValue:animation.toValue forKey:animation.keyPath];
-        [maskLayer addAnimation:animation forKey:@"path"];
+        [maskLayer addAnimation:animation forKey:nil];
         
         [animation setCompletion:^(BOOL finished) {
             fromView.layer.mask = nil;
